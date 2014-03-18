@@ -590,13 +590,16 @@ if(!String.prototype.formatNum) {
             firstday = (firstday == 0 ? 7 : firstday);
         }
 
+
         day = (day - firstday) + 1;
         var curdate = new Date(this.options.position.start.getFullYear(), this.options.position.start.getMonth(), day, 0, 0, 0);
 
-        // if day of the current month
+
+
         if(day > 0) {
             cls = this.options.classes.months.inmonth;
         }
+
         // stop cycling table rows;
         var daysinmonth = (new Date(this.options.position.end.getTime() - 1)).getDate();
         if((day + 1) > daysinmonth) {
@@ -679,6 +682,9 @@ if(!String.prototype.formatNum) {
                 addClass("saturday", classes);
                 break;
         }
+
+        addClass(date.toDateString(), classes);
+
         return classes.join(" ");
     };
 
@@ -812,7 +818,9 @@ if(!String.prototype.formatNum) {
     };
 
     Calendar.prototype.isToday = function() {
-        return false;
+        var now = new Date().getTime();
+
+        return ((now > this.options.position.start) && (now < this.options.position.end));
     }
 
     Calendar.prototype.getStartDate = function() {
@@ -910,16 +918,16 @@ if(!String.prototype.formatNum) {
 
         $('*[data-toggle="tooltip"]').tooltip({container: 'body'});
 
-        $('*[data-cal-date]').click(function() {
-            var view = $(this).data('cal-view');
-            self.options.day = $(this).data('cal-date');
-            self.view(view);
-        });
-        $('.cal-cell').dblclick(function() {
-            var view = $('[data-cal-date]', this).data('cal-view');
-            self.options.day = $('[data-cal-date]', this).data('cal-date');
-            self.view(view);
-        });
+        /* $('*[data-cal-date]').click(function() {
+         var view = $(this).data('cal-view');
+         self.options.day = $(this).data('cal-date');
+         self.view(view);
+         });*/
+        /* $('.cal-cell').dblclick(function() {
+         var view = $('[data-cal-date]', this).data('cal-view');
+         self.options.day = $('[data-cal-date]', this).data('cal-date');
+         self.view(view);
+         }); */
 
         this['_update_' + this.options.view]();
 
@@ -1016,28 +1024,29 @@ if(!String.prototype.formatNum) {
         this._update_month_year();
 
         var self = this;
+        /*
+         var week = $(document.createElement('div')).attr('id', 'cal-week-box');
+         var start = this.options.position.start.getFullYear() + '-' + this.options.position.start.getMonthFormatted() + '-';
+         $('.cal-month-box .cal-row-fluid')
+         .on('mouseenter', function() {
+         var p = new Date(self.options.position.start);
+         var child = $('.cal-cell1:first-child .cal-month-day', this);
+         var day = (child.hasClass('cal-month-first-row') ? 1 : $('[data-cal-date]', child).text());
+         p.setDate(parseInt(day));
+         day = (day < 10 ? '0' + day : day);
+         week.html(self.locale.week.format(p.getWeek()));
+         week.attr('data-cal-week', start + day).show().appendTo(child);
+         })
+         .on('mouseleave', function() {
+         week.hide();
+         })
+         ;
 
-        var week = $(document.createElement('div')).attr('id', 'cal-week-box');
-        var start = this.options.position.start.getFullYear() + '-' + this.options.position.start.getMonthFormatted() + '-';
-        $('.cal-month-box .cal-row-fluid')
-            .on('mouseenter', function() {
-                var p = new Date(self.options.position.start);
-                var child = $('.cal-cell1:first-child .cal-month-day', this);
-                var day = (child.hasClass('cal-month-first-row') ? 1 : $('[data-cal-date]', child).text());
-                p.setDate(parseInt(day));
-                day = (day < 10 ? '0' + day : day);
-                week.html(self.locale.week.format(p.getWeek()));
-                week.attr('data-cal-week', start + day).show().appendTo(child);
-            })
-            .on('mouseleave', function() {
-                week.hide();
-            })
-        ;
-
-        week.click(function() {
-            self.options.day = $(this).data('cal-week');
-            self.view('week');
-        });
+         week.click(function() {
+         self.options.day = $(this).data('cal-week');
+         self.view('week');
+         });
+         */
 
         $('a.event').mouseenter(function() {
             $('a[data-event-id="' + $(this).data('event-id') + '"]').closest('.cal-cell1').addClass('day-highlight dh-' + $(this).data('event-class'));
@@ -1053,7 +1062,7 @@ if(!String.prototype.formatNum) {
         }
         var self = this;
         var activecell = 0;
-        var downbox = $(document.createElement('div')).attr('id', 'cal-day-tick').html('<i class="icon-chevron-down glyphicon glyphicon-chevron-down"></i>');
+        var downbox = $(document.createElement('div'));
 
         $('.cal-month-day, .cal-year-box .span3')
             .on('mouseenter', function() {
@@ -1071,7 +1080,7 @@ if(!String.prototype.formatNum) {
             })
         ;
 
-        var slider = $(document.createElement('div')).attr('id', 'cal-slide-box');
+        var slider = $(document.createElement('div')).attr('class', 'cal-more-box');
         slider.hide().click(function(event) {
             event.stopPropagation();
         });
@@ -1098,13 +1107,15 @@ if(!String.prototype.formatNum) {
         event.stopPropagation();
 
         var that = $(that);
-        var cell = that.closest('.cal-cell');
-        var row = cell.closest('.cal-before-eventlist');
+        var cell = that.closest('.cal-month-day');
+        var row = cell.closest('.cal-month-day');
+
+        console.log(row);
         var tick_position = cell.data('cal-row');
 
-        that.fadeOut('fast');
 
-        slider.slideUp('fast', function() {
+
+        slider.slideUp(0, function() {
             var event_list = $('.events-list', cell);
             slider.html(self.options.templates['events-list']({
                 cal:    self,
@@ -1112,10 +1123,10 @@ if(!String.prototype.formatNum) {
             }));
             row.after(slider);
             self.activecell = $('[data-cal-date]', cell).text();
-            $('#cal-slide-tick').addClass('tick' + tick_position).show();
-            slider.slideDown('fast', function() {
+            // $('#cal-slide-tick').addClass('tick' + tick_position).show();
+            slider.slideDown(0, function() {
                 $('body').one('click', function() {
-                    slider.slideUp('fast');
+                    slider.slideUp(0);
                     self.activecell = 0;
                 });
             });
