@@ -7,7 +7,7 @@
             <% i++ %>
             <% if (i <= 3) { %>
             <li style="<%= event['color'] %>">
-                <span style="color:<%= event['color'] %>" class="label"><%= event['time'] %></span>
+                <span style="background:<%= event['color'] %>" class="label"><%= event['time'] %></span>
                 <a href="<%= event.url ? event.url : 'javascript:void(0)' %>" data-event-id="<%= event.id %>" data-event-class="<%= event['class'] %>"
                    class="<%= event['class'] %>" data-toggle="tooltip"
                    title="<%= event.title %>"><%= event.title %></a>
