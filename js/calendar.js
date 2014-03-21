@@ -1085,13 +1085,10 @@ if(!String.prototype.formatNum) {
                 downbox.hide();
             })
             .on('click', function(event) {
-//                if($('.events-list', this).length == 0) return;
-                //if($(this).children('[data-cal-date]').text() == self.activecell) return;
-//                showEventsList(event, downbox, slider, self);
                 if (typeof self.onEventClick === 'function') {
                     var event_list = $('.events-list', $(this));
                     var events = self.getEventsBetween(parseInt(event_list.data('cal-start')), parseInt(event_list.data('cal-end')))
-                    self.onEventClick(event, events, $(this).find('[data-cel-date]').attr('data-cel-date'));
+                    self.onEventClick(event, events, $(this).find('[data-cal-date]').attr('data-cal-date'));
                 }
             })
         ;
