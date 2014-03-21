@@ -1085,8 +1085,8 @@ if(!String.prototype.formatNum) {
                 downbox.hide();
             })
             .on('click', function(event) {
-                if($('.events-list', this).length == 0) return;
-                if($(this).children('[data-cal-date]').text() == self.activecell) return;
+//                if($('.events-list', this).length == 0) return;
+                //if($(this).children('[data-cal-date]').text() == self.activecell) return;
 //                showEventsList(event, downbox, slider, self);
                 if (typeof self.onEventClick === 'function') {
                     var cell = downbox.closest('.cal-month-day');
