@@ -8,7 +8,7 @@
             <% if (i <= 3) { %>
             <li style="<%= event['color'] %>">
                 <span style="background:<%= event['color'] %>" class="label"><%= event['time'] %></span>
-                <a href="<%= event.url ? event.url : 'javascript:void(0)' %>" data-event-id="<%= event.id %>" data-event-class="<%= event['class'] %>"
+                <a href="#" data-event-id="<%= event.id %>" data-event-class="<%= event['class'] %>"
                    class="<%= event['class'] %>" data-toggle="tooltip"
                    title="<%= event.title %>"><%= event.title %></a>
             </li>       
@@ -16,10 +16,10 @@
             <% }); %>
             <% i=0 %>
         </ul>
-        <% if (events.length > 3) { %>
+        <% if (events.length > 0) { %>
         <div class="btn-more clearfix">
             <div class="pull-left">
-                <a href="javascript:void(0);" class="btn">Bekijk alle </a>
+                <a href="javascript:void(0);" class="btn">Manage </a>
             </div>
             <div class="pull-right">
                 <span class="event-day"><%= day %></span>

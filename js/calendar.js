@@ -1020,6 +1020,13 @@ if(!String.prototype.formatNum) {
         this._update_month_year();
     };
 
+    /**
+     * Abstract on event click
+     */
+    Calendar.prototype.onEventClick = function() {
+
+    };
+
     Calendar.prototype._update_month = function() {
         this._update_month_year();
 
@@ -1076,7 +1083,10 @@ if(!String.prototype.formatNum) {
             .on('click', function(event) {
                 if($('.events-list', this).length == 0) return;
                 if($(this).children('[data-cal-date]').text() == self.activecell) return;
-                showEventsList(event, downbox, slider, self);
+//                showEventsList(event, downbox, slider, self);
+                if (typeof self.onEventClick === 'function') {
+                    self.onEventClick(event, downbox, slider);
+                }
             })
         ;
 
