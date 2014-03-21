@@ -1091,7 +1091,7 @@ if(!String.prototype.formatNum) {
                 if (typeof self.onEventClick === 'function') {
                     var event_list = $('.events-list', $(this));
                     var events = self.getEventsBetween(parseInt(event_list.data('cal-start')), parseInt(event_list.data('cal-end')))
-                    self.onEventClick(events, event);
+                    self.onEventClick(event, events, $(this).find('[data-cel-date]').attr('data-cel-date'));
                 }
             })
         ;
