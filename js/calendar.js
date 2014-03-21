@@ -1023,7 +1023,7 @@ if(!String.prototype.formatNum) {
     /**
      * Abstract on event click
      */
-    Calendar.prototype.onEventClick = function() {
+    Calendar.prototype.onEventClick = function(events, clickEvent) {
 
     };
 
@@ -1085,7 +1085,10 @@ if(!String.prototype.formatNum) {
                 if($(this).children('[data-cal-date]').text() == self.activecell) return;
 //                showEventsList(event, downbox, slider, self);
                 if (typeof self.onEventClick === 'function') {
-                    self.onEventClick(event, downbox, slider);
+                    var cell = downbox.closest('.cal-month-day');
+                    var event_list = $('.events-list', cell);
+                    var events = self.getEventsBetween(parseInt(event_list.data('cal-start')), parseInt(event_list.data('cal-end')))
+                    self.onEventClick(events, event);
                 }
             })
         ;
