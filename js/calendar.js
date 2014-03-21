@@ -1072,10 +1072,14 @@ if(!String.prototype.formatNum) {
         var downbox = $(document.createElement('div'));
 
         $('.cal-month-day, .cal-year-box .span3')
-            .on('mouseenter', function() {
+            .on('mouseenter', function(event) {
                 if($('.events-list', this).length == 0) return;
                 if($(this).children('[data-cal-date]').text() == self.activecell) return;
                 downbox.show().appendTo(this);
+                var eventsCount = $(this).attr('data-events-count');
+                if (eventsCount > 0) {
+                    showEventsList(event, downbox, slider, self);
+                }
             })
             .on('mouseleave', function() {
                 downbox.hide();
@@ -1123,7 +1127,6 @@ if(!String.prototype.formatNum) {
         var cell = that.closest('.cal-month-day');
         var row = cell.closest('.cal-month-day');
 
-        console.log(row);
         var tick_position = cell.data('cal-row');
 
 
