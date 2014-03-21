@@ -1071,7 +1071,7 @@ if(!String.prototype.formatNum) {
         var activecell = 0;
         var downbox = $(document.createElement('div'));
 
-        $('.cal-month-day, .cal-year-box .span3')
+        $('.cal-month-day')
             .on('mouseenter', function(event) {
                 if($('.events-list', this).length == 0) return;
                 if($(this).children('[data-cal-date]').text() == self.activecell) return;
@@ -1089,8 +1089,7 @@ if(!String.prototype.formatNum) {
                 //if($(this).children('[data-cal-date]').text() == self.activecell) return;
 //                showEventsList(event, downbox, slider, self);
                 if (typeof self.onEventClick === 'function') {
-                    var cell = downbox.closest('.cal-month-day');
-                    var event_list = $('.events-list', cell);
+                    var event_list = $('.events-list', $(this));
                     var events = self.getEventsBetween(parseInt(event_list.data('cal-start')), parseInt(event_list.data('cal-end')))
                     self.onEventClick(events, event);
                 }
