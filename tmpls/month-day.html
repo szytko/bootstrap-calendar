@@ -9,8 +9,7 @@
             <li style="<%= event['color'] %>">
                 <span style="background:<%= event['color'] %>" class="label"><%= event['time'] %></span>
                 <a href="javascript:void(0);" data-event-id="<%= event.id %>" data-event-class="<%= event['class'] %>"
-                   class="<%= event['class'] %>" data-toggle="tooltip"
-                   title="<%= event.title %>"><%= event.title %></a>
+                   class="<%= event['class'] %>" data-toggle="tooltip"><%= event.title %></a>
             </li>       
             <% } %>
             <% }); %>
