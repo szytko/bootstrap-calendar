@@ -2,7 +2,8 @@
     <span class="pull-right" data-cal-date="<%= data_day %>" data-cal-view="day" data-toggle="tooltip" title="<%= tooltip %>"><%= day %></span>
     <% if (events.length > 0) { %>
     <div class="events-list" data-cal-start="<%= start %>" data-cal-end="<%= end %>">
-        <ul>                
+        <ul>
+            <% i=0 %>
             <% _.each(events, function(event) { %>
             <% i++ %>
             <% if (i <= 3) { %>
@@ -13,7 +14,6 @@
             </li>       
             <% } %>
             <% }); %>
-            <% i=0 %>
         </ul>
         <% if (events.length > 0) { %>
         <div class="btn-more clearfix">
